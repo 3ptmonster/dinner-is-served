@@ -17,7 +17,7 @@ export class Todos {
       let headers = new Headers();
       headers.append('Authorization', this.authService.token);
 
-      this.http.get('https://YOUR_HEROKU_APP.herokuapp.com/api/todos', {headers: headers})
+      this.http.get('https://intense-earth-58690.herokuapp.com/api/todos', {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -36,7 +36,7 @@ export class Todos {
       headers.append('Content-Type', 'application/json');
       headers.append('Authorization', this.authService.token);
 
-      this.http.post('https://YOUR_HEROKU_APP.herokuapp.com/api/todos', JSON.stringify(todo), {headers: headers})
+      this.http.post('https://intense-earth-58690.herokuapp.com/api/todos', JSON.stringify(todo), {headers: headers})
         .map(res => res.json())
         .subscribe(res => {
           resolve(res);
@@ -55,7 +55,7 @@ export class Todos {
         let headers = new Headers();
         headers.append('Authorization', this.authService.token);
 
-        this.http.delete('https://YOUR_HEROKU_APP.herokuapp.com/api/todos/' + id, {headers: headers}).subscribe((res) => {
+        this.http.delete('https://intense-earth-58690.herokuapp.com/api/todos/' + id, {headers: headers}).subscribe((res) => {
             resolve(res);
         }, (err) => {
             reject(err);

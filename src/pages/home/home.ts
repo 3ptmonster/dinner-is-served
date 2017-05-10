@@ -5,7 +5,7 @@ import { Auth } from '../../providers/auth';
 import { LoginPage } from '../login/login';
 
 @Component({
-  selector: 'home-page',
+  selector: 'home',
   templateUrl: 'home.html'
 })
 export class HomePage {

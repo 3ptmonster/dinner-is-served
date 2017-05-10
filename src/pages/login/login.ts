@@ -5,8 +5,8 @@ import { HomePage } from '../home/home';
 import { RegisterPage } from '../register/register';
 
 @Component({
-  selector: 'login-page',
-  templateUrl: 'login-page.html'
+  selector: 'login',
+  templateUrl: 'login.html'
 })
 export class LoginPage {
 

@@ -4,7 +4,7 @@ import { Auth } from '../../providers/auth';
 import { HomePage } from '../home/home';
 
 @Component({
-  selector: 'register-page',
+  selector: 'register',
   templateUrl: 'register.html'
 })
 export class RegisterPage {

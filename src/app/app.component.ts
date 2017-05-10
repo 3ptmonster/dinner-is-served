@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { StatusBar } from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
 import { LoginPage } from '../pages/login/login';
 
 @Component({
@@ -9,9 +9,9 @@ import { LoginPage } from '../pages/login/login';
 export class MyApp {
   rootPage = LoginPage;
 
-  constructor(platform: Platform) {
+  constructor(platform: Platform, statusBar: StatusBar) {
     platform.ready().then(() => {
-      StatusBar.styleDefault();
+      statusBar.styleDefault();
     });
   }
 }
