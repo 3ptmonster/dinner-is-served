@@ -1,52 +1,71 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
-import { AuthService } from '../../providers/auth-service';
+import { NavController, LoadingController } from 'ionic-angular';
+import { Auth } from '../../providers/auth';
+import { HomePage } from '../home/home';
+import { RegisterPage } from '../register/register';
 
-@IonicPage()
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: 'login-page',
+  templateUrl: 'login-page.html'
 })
 export class LoginPage {
-  loading: Loading;
-  registerCredentials = { email: '', password: '' };
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {}
+    email: string;
+    password: string;
+    loading: any;
 
-  public createAccount() {
-      this.nav.push('RegisterPage');
-  } //end createAccount
+    constructor(public navCtrl: NavController, public authService: Auth, public loadingCtrl: LoadingController) {
 
-  public login() {
-    this.showLoading();
-    this.auth.login(this.registerCredentials).subscribe(allowed => {
-      if (allowed) {
-        this.nav.setRoot('HomePage');
-      } else {
-        this.showError("Access Denied");
-      }
-    },
-      error => {
-        this.showError(error);
-      });
-  } //end login
+    }
 
-  showLoading() {
-    this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      dismissOnPageChange: true
-    });
-    this.loading.present();
-  }
+    ionViewDidLoad() {
 
-  showError(text) {
-    this.loading.dismiss();
+        this.showLoader();
 
-    let alert = this.alertCtrl.create({
-      title: 'Fail',
-      subTitle: text,
-      buttons: ['OK']
-    });
-    alert.present(prompt);
-  }
+        //Check if already authenticated
+        this.authService.checkAuthentication().then((res) => {
+            console.log("Already authorized");
+            this.loading.dismiss();
+            this.navCtrl.setRoot(HomePage);
+        }, (err) => {
+            console.log("Not already authorized");
+            this.loading.dismiss();
+        });
+
+    } //end ionViewDidLoad
+
+    login(){
+
+        this.showLoader();
+
+        let credentials = {
+            email: this.email,
+            password: this.password
+        };
+
+        this.authService.login(credentials).then((result) => {
+            this.loading.dismiss();
+            console.log(result);
+            this.navCtrl.setRoot(HomePage);
+        }, (err) => {
+            this.loading.dismiss();
+            console.log(err);
+        });
+
+    } //end login
+
+    launchSignup(){
+        this.navCtrl.push(RegisterPage);
+    } //end launchSignup
+
+    showLoader(){
+
+        this.loading = this.loadingCtrl.create({
+            content: 'Authenticating...'
+        });
+
+        this.loading.present();
+
+    } //end showLoader
+
 }
