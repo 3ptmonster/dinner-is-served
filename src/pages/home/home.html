@@ -1,12 +1,12 @@
 <ion-header>
  <ion-navbar color="secondary">
   <ion-title>
-    Todo Roles
+    Dinner Recipes
   </ion-title>
-  <ion-buttons end>
-    <button ion-button icon-only (click)="addTodo()"><ion-icon name="add"></ion-icon></button>
-  </ion-buttons>
   <ion-buttons start>
+    <button ion-button icon-only (click)="addRecipe()"><ion-icon name="add"></ion-icon></button>
+  </ion-buttons>
+  <ion-buttons end>
     <button ion-button icon-only (click)="logout()"><ion-icon name="power"></ion-icon></button>
   </ion-buttons>
  </ion-navbar>
@@ -16,14 +16,14 @@
 
   <ion-list no-lines>
 
-    <ion-item-sliding *ngFor="let todo of todos">
+    <ion-item-sliding *ngFor="let recipe of recipes">
 
       <ion-item>
-        {{todo.title}}
+        {{recipe.title}}
       </ion-item>
 
       <ion-item-options>
-        <button ion-button color="danger" (click)="deleteTodo(todo)">
+        <button ion-button color="danger" (click)="deleteRecipe(recipe)">
           <ion-icon name="trash"></ion-icon>
           Delete
         </button>

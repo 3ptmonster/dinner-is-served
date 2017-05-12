@@ -20,7 +20,7 @@ export class Auth {
             let headers = new Headers();
             headers.append('Authorization', this.token);
 
-            this.http.get('https://intense-earth-58690.herokuapp.com/api/auth/protected', {headers: headers})
+            this.http.get('http://50.30.233.55:8080/api/auth/protected', {headers: headers})
                 .subscribe(res => {
                     resolve(res);
                 }, (err) => {
@@ -40,7 +40,7 @@ export class Auth {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        this.http.post('https://intense-earth-58690.herokuapp.com/api/auth/register', JSON.stringify(details), {headers: headers})
+        this.http.post('http://50.30.233.55:8080/api/auth/register', JSON.stringify(details), {headers: headers})
           .subscribe(res => {
 
             let data = res.json();
@@ -63,7 +63,7 @@ export class Auth {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        this.http.post('https://intense-earth-58690.herokuapp.com/api/auth/login', JSON.stringify(credentials), {headers: headers})
+        this.http.post('http://50.30.233.55:8080/api/auth/login', JSON.stringify(credentials), {headers: headers})
           .subscribe(res => {
 
             let data = res.json();

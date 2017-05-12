@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { NavController, ModalController, AlertController, LoadingController } from 'ionic-angular';
-import { Todos } from '../../providers/todos';
+import { Recipes } from '../../providers/recipes';
 import { Auth } from '../../providers/auth';
 import { LoginPage } from '../login/login';
 
@@ -10,29 +10,29 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
-  todos: any;
+  recipes: any;
   loading: any;
 
-  constructor(public navCtrl: NavController, public todoService: Todos, public modalCtrl: ModalController,
+  constructor(public navCtrl: NavController, public recipeService: Recipes, public modalCtrl: ModalController,
     public alertCtrl: AlertController, public authService: Auth, public loadingCtrl: LoadingController) {
 
   }
 
   ionViewDidLoad(){
 
-    this.todoService.getTodos().then((data) => {
-          this.todos = data;
+    this.recipeService.getRecipes().then((data) => {
+          this.recipes = data;
     }, (err) => {
         console.log("not allowed");
     });
 
   }
 
-  addTodo(){
+  addRecipe(){
 
     let prompt = this.alertCtrl.create({
-      title: 'Add Todo',
-      message: 'Describe your todo below:',
+      title: 'Add recipe',
+      message: 'Describe your recipe below:',
       inputs: [
         {
           name: 'title'
@@ -44,16 +44,16 @@ export class HomePage {
         },
         {
           text: 'Save',
-          handler: todo => {
+          handler: recipe => {
 
-                if(todo){
+                if(recipe){
 
                     this.showLoader();
 
-                    this.todoService.createTodo(todo).then((result) => {
+                    this.recipeService.createRecipe(recipe).then((result) => {
                         this.loading.dismiss();
-                        this.todos = result;
-                        console.log("todo created");
+                        this.recipes = result;
+                        console.log("recipe created");
                     }, (err) => {
                         this.loading.dismiss();
                         console.log("not allowed");
@@ -71,22 +71,22 @@ export class HomePage {
 
   }
 
-  deleteTodo(todo){
+  deleteRecipe(recipe){
 
     this.showLoader();
 
     //Remove from database
-    this.todoService.deleteTodo(todo._id).then((result) => {
+    this.recipeService.deleteRecipe(recipe._id).then((result) => {
 
       this.loading.dismiss();
 
       //Remove locally
-        let index = this.todos.indexOf(todo);
+        let index = this.recipes.indexOf(recipe);
 
         if(index > -1){
-            this.todos.splice(index, 1);
+            this.recipes.splice(index, 1);
         }
-
+        console.log("recipe deleted");
     }, (err) => {
       this.loading.dismiss();
         console.log("not allowed");

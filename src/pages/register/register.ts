@@ -23,7 +23,7 @@ export class RegisterPage {
     let details = {
         email: this.email,
         password: this.password,
-        role: this.role
+        role: "creator"
     };
 
     this.authService.createAccount(details).then((result) => {

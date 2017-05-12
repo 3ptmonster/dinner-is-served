@@ -7,7 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { Auth } from './../providers/auth';
-import { Todos } from './../providers/todos';
+import { Recipes } from './../providers/recipes';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
@@ -31,6 +31,6 @@ import { HttpModule } from '@angular/http';
     LoginPage,
     RegisterPage
   ],
-  providers: [StatusBar, Todos, Auth]
+  providers: [StatusBar, Recipes, Auth]
 })
 export class AppModule {}
