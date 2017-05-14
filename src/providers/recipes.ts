@@ -1,68 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { Auth } from './auth';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class Recipes {
+  key = 'd3a6083e2d9b5bda21c675545f08db0d';
+  loading: any;
+  constructor(public http: Http, public authService: Auth) {}
 
-  constructor(public http: Http, public authService: Auth) {
-
-  }
-
-  createRecipe(recipe){
-
+  loadRecipes() {
     return new Promise((resolve, reject) => {
-
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('Authorization', this.authService.token);
-
-      this.http.post('http://50.30.233.55:8080/api/recipes', JSON.stringify(recipe), {headers: headers})
+      this.http.get(`http://food2fork.com/api/search?key=${this.key}`)
         .map(res => res.json())
         .subscribe(res => {
           resolve(res);
         }, (err) => {
           reject(err);
         });
-
     });
 
   }
 
-  getRecipes(){
-
+  searchRecipes(searchTerm) {
     return new Promise((resolve, reject) => {
-
-      let headers = new Headers();
-      headers.append('Authorization', this.authService.token);
-
-      this.http.get('http://50.30.233.55:8080/api/recipes', {headers: headers})
+      this.http.get(`http://food2fork.com/api/search?key=${this.key}&q=${searchTerm}`)
         .map(res => res.json())
-        .subscribe(data => {
-          resolve(data);
+        .subscribe(res => {
+          resolve(res);
         }, (err) => {
           reject(err);
         });
     });
-
   }
-
-  deleteRecipe(id){
-
-    return new Promise((resolve, reject) => {
-
-        let headers = new Headers();
-        headers.append('Authorization', this.authService.token);
-
-        this.http.delete('http://50.30.233.55:8080/api/recipes/' + id, {headers: headers}).subscribe((res) => {
-            resolve(res);
-        }, (err) => {
-            reject(err);
-        });
-
-    });
-
-  }
-
 }

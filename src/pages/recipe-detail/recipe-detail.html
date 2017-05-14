@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>Recipe Detail</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-card color="light">
+    <img src="{{recipe.image_url}}" style="height:225px;width:350px;">
+    <ion-card-content>
+     <ion-card-title>
+       <h1>{{recipe.title}}</h1>
+       <p>Rating: {{recipe.social_rank}}</p>
+     </ion-card-title>
+      <ion-list no-lines>
+
+        <ion-item (click)="saveThis(this)">
+          <ion-icon name="star-outline" item-left></ion-icon>
+          Add To Favorites
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon name="ios-list" item-left></ion-icon>
+          <a href="{{recipe.source_url}}">Link to Ingredients and Directions</a>
+        </ion-item>
+
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="secondary">
+    <ion-title>Powered By: <a href="http://www.food2fork.com">Food2Fork</a></ion-title>
+  </ion-toolbar>
+</ion-footer>

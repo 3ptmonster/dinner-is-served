@@ -1,11 +1,9 @@
 .ios, .md {
 
-    home {
-
-        ion-content {
-            background-color: map-get($colors, secondary);
+    home-page {
+        .recipeRow {
+            background-color: #E7E7E7; 
         }
-
     }
 
 }

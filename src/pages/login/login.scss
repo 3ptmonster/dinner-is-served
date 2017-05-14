@@ -3,7 +3,7 @@
     login {
 
         ion-content {
-            background-color: map-get($colors, secondary);
+            background-color: #E7E7E7;
         }
 
         scroll-content {
@@ -38,7 +38,7 @@
         }
 
         .create-account {
-            color: #fff;
+            color: #662A72;
             text-decoration: underline;
             background: none;
         }
@@ -46,7 +46,7 @@
         .login-button {
             border-radius: 30px;
             font-size: 0.9em;
-            background-color: transparent;
+            background-color: #662A72;
             border: 1px solid #fff;
         }
 

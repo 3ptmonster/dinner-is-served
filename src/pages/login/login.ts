@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
+
 import { Auth } from '../../providers/auth';
-import { HomePage } from '../home/home';
+import { UserInfo } from '../../providers/user-info';
+
 import { RegisterPage } from '../register/register';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'login',
@@ -14,9 +17,7 @@ export class LoginPage {
     password: string;
     loading: any;
 
-    constructor(public navCtrl: NavController, public authService: Auth, public loadingCtrl: LoadingController) {
-
-    }
+    constructor(public navCtrl: NavController, public authService: Auth, public loadingCtrl: LoadingController, public userInfo: UserInfo) {}
 
     ionViewDidLoad() {
 
@@ -26,7 +27,7 @@ export class LoginPage {
         this.authService.checkAuthentication().then((res) => {
             console.log("Already authorized");
             this.loading.dismiss();
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(TabsPage);
         }, (err) => {
             console.log("Not already authorized");
             this.loading.dismiss();
@@ -45,8 +46,8 @@ export class LoginPage {
 
         this.authService.login(credentials).then((result) => {
             this.loading.dismiss();
-            console.log(result);
-            this.navCtrl.setRoot(HomePage);
+            this.userInfo.storeEmail(this.email);
+            this.navCtrl.setRoot(TabsPage);
         }, (err) => {
             this.loading.dismiss();
             console.log(err);

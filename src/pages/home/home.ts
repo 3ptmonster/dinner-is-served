@@ -3,36 +3,53 @@ import { NavController, ModalController, AlertController, LoadingController } fr
 import { Recipes } from '../../providers/recipes';
 import { Auth } from '../../providers/auth';
 import { LoginPage } from '../login/login';
+import { RecipeDetailPage } from '../recipe-detail/recipe-detail';
 
 @Component({
-  selector: 'home',
+  selector: 'home-page',
   templateUrl: 'home.html'
 })
 export class HomePage {
-
   recipes: any;
   loading: any;
 
   constructor(public navCtrl: NavController, public recipeService: Recipes, public modalCtrl: ModalController,
-    public alertCtrl: AlertController, public authService: Auth, public loadingCtrl: LoadingController) {
+    public alertCtrl: AlertController, public authService: Auth, public loadingCtrl: LoadingController) {}
 
+  doThis(_recipe) {
+    this.navCtrl.push(RecipeDetailPage, _recipe);
   }
 
   ionViewDidLoad(){
 
-    this.recipeService.getRecipes().then((data) => {
-          this.recipes = data;
+    this.showLoader();
+
+    //Check if already authenticated
+    this.authService.checkAuthentication().then((res) => {
+        console.log("Already authorized");
+        this.loading.dismiss();
+        this.recipeService.loadRecipes().then((response) => {
+          let trimmedRes = "";
+          for (let key in response) {
+              if (key === "recipes") {
+                trimmedRes = response[key].slice(0,10);
+              }
+          }
+          this.recipes = trimmedRes;
+        });
     }, (err) => {
-        console.log("not allowed");
+        console.log("Not already authorized");
+        this.loading.dismiss();
+        this.navCtrl.setRoot(LoginPage);
     });
 
   }
 
-  addRecipe(){
+  findRecipes(){
 
     let prompt = this.alertCtrl.create({
-      title: 'Add recipe',
-      message: 'Describe your recipe below:',
+      title: 'Recipe Search',
+      message: 'Search by ingredient or recipe name:',
       inputs: [
         {
           name: 'title'
@@ -43,17 +60,22 @@ export class HomePage {
           text: 'Cancel'
         },
         {
-          text: 'Save',
+          text: 'Search',
           handler: recipe => {
 
                 if(recipe){
 
                     this.showLoader();
 
-                    this.recipeService.createRecipe(recipe).then((result) => {
+                    this.recipeService.searchRecipes(recipe.title).then((result) => {
                         this.loading.dismiss();
-                        this.recipes = result;
-                        console.log("recipe created");
+                        let trimmedRes = "";
+                        for (let key in result) {
+                            if (key === "recipes") {
+                              trimmedRes = result[key].slice(0,10);
+                            }
+                        }
+                        this.recipes = trimmedRes;
                     }, (err) => {
                         this.loading.dismiss();
                         console.log("not allowed");
@@ -72,42 +94,27 @@ export class HomePage {
   }
 
   deleteRecipe(recipe){
-
     this.showLoader();
+    this.loading.dismiss();
 
-    //Remove from database
-    this.recipeService.deleteRecipe(recipe._id).then((result) => {
-
-      this.loading.dismiss();
-
-      //Remove locally
-        let index = this.recipes.indexOf(recipe);
-
-        if(index > -1){
-            this.recipes.splice(index, 1);
-        }
-        console.log("recipe deleted");
-    }, (err) => {
-      this.loading.dismiss();
-        console.log("not allowed");
-    });
+    //Remove locally
+    let index = this.recipes.indexOf(recipe);
+    if(index > -1){
+        this.recipes.splice(index, 1);
+    }
+    console.log("recipe deleted");
   }
 
   showLoader(){
-
     this.loading = this.loadingCtrl.create({
       content: 'Authenticating...'
     });
-
     this.loading.present();
-
   }
 
   logout(){
-
     this.authService.logout();
     this.navCtrl.setRoot(LoginPage);
-
   }
 
 }

@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Account
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>Your Account</ion-list-header>
+    <ion-item>
+      <ion-label>Notifications</ion-label>
+      <ion-toggle [(ngModel)]="notifications"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><ion-icon name="lock"></ion-icon></ion-label>
+      <ion-input type="text" [readonly]="true">{{email}}</ion-input>
+    </ion-item>
+  </ion-list>
+</ion-content>

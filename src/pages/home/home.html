@@ -1,35 +1,36 @@
 <ion-header>
- <ion-navbar color="secondary">
-  <ion-title>
-    Dinner Recipes
-  </ion-title>
-  <ion-buttons start>
-    <button ion-button icon-only (click)="addRecipe()"><ion-icon name="add"></ion-icon></button>
-  </ion-buttons>
-  <ion-buttons end>
-    <button ion-button icon-only (click)="logout()"><ion-icon name="power"></ion-icon></button>
-  </ion-buttons>
- </ion-navbar>
+  <ion-navbar color="secondary">
+    <ion-title>
+      Discover Recipes
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button icon-only color="light" (click)="findRecipes()"><ion-icon name="search"></ion-icon></button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="logout()"><ion-icon name="power"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content >
   <ion-list no-lines>
-
-    <ion-item-sliding *ngFor="let recipe of recipes">
-
-      <ion-item>
+    <ion-item-sliding *ngFor="let recipe of recipes" color="light">
+      <button class="recipeRow" ion-item (click)="doThis(recipe)">
         {{recipe.title}}
-      </ion-item>
-
+      </button>
       <ion-item-options>
         <button ion-button color="danger" (click)="deleteRecipe(recipe)">
           <ion-icon name="trash"></ion-icon>
           Delete
         </button>
       </ion-item-options>
+
     </ion-item-sliding>
-
   </ion-list>
-
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="secondary">
+    <ion-title>Powered By: <a href="http://www.food2fork.com">Food2Fork</a></ion-title>
+  </ion-toolbar>
+</ion-footer>
